@@ -1,0 +1,50 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "сategory_name": "Ноутбуки",
+      "сategory_description": ""
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "сategory_name": "Смартфоны",
+      "сategory_description": "карманный персональный компьютер, дополненный функциональностью мобильного телефона"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "сategory_name": "Наушники",
+      "сategory_description": "мини-динамики надеваемых на голову или вставляемых прямо в ушные каналы"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "сategory_name": "Компьютерная мышь",
+      "сategory_description": "координатное устройство для управления курсором и отдачи различных команд компьютеру"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "сategory_name": "Мониторы",
+      "сategory_description": "устройство оперативной визуальной связи пользователя с управляющим устройством и отображением данных"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "сategory_name": "Клавиатуры",
+      "сategory_description": "комплект расположенных в определённом порядке клавиш для управления каким-либо устройством или для ввода данных"
+    }
+  }
+]
