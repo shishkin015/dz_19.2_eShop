@@ -1,7 +1,11 @@
-from django.urls import path, re_path
+from django.urls import path
+
+from catalog.apps import CatalogConfig
 from catalog.views import index, contact
 
+app_name = CatalogConfig.name
+
 urlpatterns = [
-    re_path(r'^contact', contact),
-    path('', index),
+    path('', index, name='index'),
+    path('contact/', contact, name='contacts'),
 ]
