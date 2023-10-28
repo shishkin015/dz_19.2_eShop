@@ -1,0 +1,27 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Информация "{{object.title}}" ({{ object.slug }})
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {{ object.body }}
+                        </p>
+                        <a type="button" href="{% url 'blog:list' %}" class="btn btn-dark">К списку</a>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-muted">Просмотры: {{ object.views_count }}</span>
+                    </div>
+
+                 </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

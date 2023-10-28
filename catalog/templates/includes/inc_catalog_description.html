@@ -1,7 +1,11 @@
 
-<h4 class="card-title pricing-card-title">{{ product.product_price }} руб.</h4>
+<h4 class="card-title pricing-card-title">{{ object.product_price }} руб.</h4>
 <ul class="list-unstyled mt-3 mb-4 text-start m-3">
     <li><h6>Описание</h6><li>
-    <li>{{product.product_description|slice:"100"}}</li>
+    <li>{{object.product_description|slice:"100"}}</li>
 </ul>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <a type="submit" href="{% url 'catalog:product_update' object.pk %}" class="btn btn-secondary">Редактор</a>
+  <a type="button" href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+</div>
 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
