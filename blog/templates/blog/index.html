@@ -1,7 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
     <div class="col-12 mb-5">
-        <a class="btn btn-warning" href="{% url 'blog:create' %}">Добавить блог</a>
+        <a class="btn btn-warning" href="{% url 'blog:create' %}">Добавить статью</a>
     </div>
     <div class="col-12 mb-5">
         <a class="btn btn-warning" href="{% url 'blog:list' %}">Просмотр активных статей</a>
@@ -15,17 +15,17 @@
                     </p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{% url 'blog:view' object.pk %}"
+                            <a href="{% url 'blog:view' object.slug %}"
                                class="btn btn-sm btn-outline-secondary">Просмотр</a>
-                            <a href="{% url 'blog:update' object.pk %}" type="button"
+                            <a href="{% url 'blog:update' object.slug %}" type="button"
                                class="btn btn-sm btn-outline-primary">Редактор</a>
                             <a href="{% url 'blog:delete' object.pk %}" type="button"
                                class="btn btn-sm btn-outline-danger">Удалить</a>
                         </div>
                         {% if object.is_published %}
-                            <a class="btn btn-warning" href="{% url 'blog:toggle_activity' object.pk %}">Активная</a>
+                            <a class="btn btn-warning" href="{% url 'blog:toggle_activity' object.slug %}">Активная</a>
                         {% else %}
-                            <a class="btn btn-success" href="{% url 'blog:toggle_activity' object.pk %}">Не активная</a>
+                            <a class="btn btn-success" href="{% url 'blog:toggle_activity' object.slug %}">Не активная</a>
                         {% endif %}
                     </div>
                 </div>

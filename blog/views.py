@@ -51,7 +51,7 @@ class BlogUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('blog:view', args=[self.kwargs.get('pk')])
+        return reverse('blog:view', args=[self.kwargs.get('slug')])
 
 
 class BlogListView(ListView):
@@ -69,6 +69,8 @@ class BlogListView(ListView):
 
 class BlogDetailView(DetailView):
     model = Blog
+    # template_name = 'blog/blog_detail.html'
+    # slug_url_kwarg = 'slug'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -79,7 +81,7 @@ class BlogDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
 
-        blog_item = Blog.objects.get(pk=self.kwargs.get('pk'))
+        blog_item = Blog.objects.get(slug=self.kwargs.get('slug'))
         context_data['blog_pk'] = blog_item.pk,
         context_data['title'] = f'{blog_item.title}'
 
@@ -94,8 +96,8 @@ class BlogDeleteView(DeleteView):
     }
 
 
-def toggle_activity(request, pk):
-    blog_item = get_object_or_404(Blog, pk=pk)
+def toggle_activity(request, slug):
+    blog_item = get_object_or_404(Blog, slug=slug)
     blog_item.is_published = False if blog_item.is_published else True
 
     blog_item.save()

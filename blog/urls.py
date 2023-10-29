@@ -9,9 +9,9 @@ urlpatterns =[
     path('', IndexView.as_view(), name='index'),
     path('create/', BlogCreateView.as_view(), name='create'),
     path('list/', BlogListView.as_view(), name='list'),
-    path('update/<int:pk>', BlogUpdateView.as_view(), name='update'),
-    path('view/<int:pk>', BlogDetailView.as_view(), name='view'),
-    path('delete/<int:pk>', BlogDeleteView.as_view(), name='delete'),
-    path('aktivity/<int:pk>/', toggle_activity, name='toggle_activity'),
+    path('update/<slug:slug>/', BlogUpdateView.as_view(), name='update'),
+    path('view/<slug:slug>/', BlogDetailView.as_view(), name='view'),
+    path('delete/<int:pk>/', BlogDeleteView.as_view(), name='delete'),
+    path('aktivity/<slug:slоug>/', toggle_activity, name='toggle_activity'),
 
 ]
