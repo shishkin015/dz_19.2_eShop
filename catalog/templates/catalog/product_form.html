@@ -2,28 +2,46 @@
 
 {% block content %}
 
-<form method="post" class="row" enctype="multipart/form-data">
-  <div class="card">
-    <div class="card-header">
-      {% if object %}
-        Редактирование продукта
-      {% else %}
-        Добавить продукт
-      {% endif %}
-    </div>
-    <div class="card-header">
+<form method="post" class="row" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                {% if object %}
+                Редактирование продукта
+                {% else %}
+                Добавить продукт
+                {% endif %}
+            </div>
+            <div class="card-body">
 
-      {% csrf_token %}
-      {{ form.as_p}}
-      <button type="submit" class="btn btn-outline-success">
-        {% if object %}
-          Сохранить
-        {% else %}
-          Добавить
-        {% endif %}
-      </button>
+                {% csrf_token %}
+                {{ form.as_p}}
+                <button type="submit" class="btn btn-outline-success">
+                    {% if object %}
+                    Сохранить
+                    {% else %}
+                    Добавить
+                    {% endif %}
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Версия
+            </div>
+            <div class="card-body">
+                {{ formset.management_form }}
+                {% for form in formset.forms %}
+                    {{ form.as_p }}
+                    {% if not forloop.last %}
+                    <div class="card-footer"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </form>
 
 {% endblock %}

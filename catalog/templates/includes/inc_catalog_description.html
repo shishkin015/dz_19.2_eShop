@@ -4,6 +4,15 @@
     <li><h6>Описание</h6><li>
     <li>{{object.product_description|slice:"100"}}</li>
 </ul>
+<ul class="list-unstyled mt-3 mb-4 text-start m-3">
+    <li><span class="text-muted">Актуальная версия:
+    {% for version_item in object.version_set.all %}
+        {% if version_item.version_sign %}
+            {{ version_item.version_name }}
+        {% endif %}
+    {% endfor %}
+    </span></li>
+</ul>
 <div class="btn-group" role="group" aria-label="Basic example">
   <a type="submit" href="{% url 'catalog:product_update' object.pk %}" class="btn btn-secondary">Редактор</a>
   <a type="button" href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
