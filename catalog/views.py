@@ -43,7 +43,6 @@ class ProductListView(ListView):
         return context_data
 
 
-
 class ProductCreateView(CreateView):
     model = Product
     extra_context = {
@@ -52,6 +51,13 @@ class ProductCreateView(CreateView):
     # fields = ('product_name', 'product_description', 'product_preview', 'product_category', 'product_price',)
     form_class = ProductForm
     success_url = reverse_lazy('catalog:index')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):

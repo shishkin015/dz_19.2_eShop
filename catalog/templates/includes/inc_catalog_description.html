@@ -11,10 +11,13 @@
             {{ version_item.version_name }}
         {% endif %}
     {% endfor %}
-    </span></li>
+    </span></li><br>
+    <li><span class="text-muted">{{ object.user|default:"-" }}</span>
 </ul>
 <div class="btn-group" role="group" aria-label="Basic example">
-  <a type="submit" href="{% url 'catalog:product_update' object.pk %}" class="btn btn-secondary">Редактор</a>
-  <a type="button" href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+    {% if user.is_authenticated %}
+        <a type="submit" href="{% url 'catalog:product_update' object.pk %}" class="btn btn-secondary">Редактор</a>
+        <a type="button" href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
 </div>
 <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>

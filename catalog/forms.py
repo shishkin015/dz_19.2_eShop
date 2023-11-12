@@ -4,6 +4,15 @@ from catalog.models import Product, Version
 
 
 class StyleFormMixin:
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     for field in self.fields:
+    #         self.fields[field].widget.attrs.update({
+    #             'class': 'form-control',
+    #             'autocomplete': 'off'
+    #         })
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -13,7 +22,8 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('product_name', 'product_description', 'product_preview', 'product_category', 'product_price',)
+        exclude = ('user',)
+        # fields = ('product_name', 'product_description', 'product_preview', 'product_category', 'product_price',)
 
     def clean_product_name(self):
         exception = ('казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар')
