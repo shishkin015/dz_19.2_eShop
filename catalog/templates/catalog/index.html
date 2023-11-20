@@ -16,7 +16,9 @@
 </div>
 {% endfor %}
 <div class="col-12">
+    {% if perms.catalog.add_catalog %}
     <a href="{% url 'catalog:product_create' %}" class="btn btn-primary from-control">Добавить продукт</a>
+    {% endif %}
 </div>
 {% endblock %}
 

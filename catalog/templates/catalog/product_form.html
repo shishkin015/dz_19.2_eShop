@@ -26,22 +26,24 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="card">
-            <div class="card-header">
-                Версия
-            </div>
-            <div class="card-body">
-                {{ formset.management_form }}
-                {% for form in formset.forms %}
-                    {{ form.as_p }}
-                    {% if not forloop.last %}
-                    <div class="card-footer"></div>
-                    {% endif %}
-                {% endfor %}
+    {% if perms.dogs.change_version %}
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Версия
+                </div>
+                <div class="card-body">
+                    {{ formset.management_form }}
+                    {% for form in formset.forms %}
+                        {{ form.as_p }}
+                        {% if not forloop.last %}
+                        <div class="card-footer"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 </form>
 
 {% endblock %}

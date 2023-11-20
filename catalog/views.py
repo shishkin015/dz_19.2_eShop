@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms import formset_factory, inlineformset_factory
@@ -12,7 +14,7 @@ from catalog.models import Product, Category, Version
 # Create your views here.
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'catalog/index.html'
     extra_context = {
         'title': 'Категории'
@@ -24,12 +26,14 @@ class IndexView(TemplateView):
         return context_data
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(product_category_id=self.kwargs.get('pk'))
+        queryset = super().get_queryset().filter(product_category_id=self.kwargs.get('pk'))
+
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(user=self.request.user)
 
         return queryset
 
@@ -43,13 +47,14 @@ class ProductListView(ListView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     extra_context = {
         'title': 'Добавить продукт'
     }
     # fields = ('product_name', 'product_description', 'product_preview', 'product_category', 'product_price',)
     form_class = ProductForm
+    permission_required = 'catalog.add_catalog'
     success_url = reverse_lazy('catalog:index')
 
     def form_valid(self, form):
@@ -60,13 +65,19 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     extra_context = {
         'title': 'Изменить продукт'
     }
     # fields = ('product_name', 'product_description', 'product_preview', 'product_category', 'product_price',)
     form_class = ProductForm
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.user != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return self.object
 
     def get_success_url(self):
         return reverse('catalog:product', args=[self.object.product_category.pk])
@@ -93,7 +104,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     extra_context = {
         'title': 'Удалить продукт'
@@ -103,6 +114,7 @@ class ProductDeleteView(DeleteView):
         return reverse('catalog:product', args=[self.object.product_category.pk])
 
 
+@login_required
 def contact(request):
     if request.method == 'POST':
         name = request.POST.get('name')

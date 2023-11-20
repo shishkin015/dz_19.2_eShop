@@ -1,4 +1,5 @@
 from django import forms
+from django.core import validators
 
 from catalog.models import Product, Version
 

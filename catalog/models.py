@@ -7,6 +7,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Product(models.Model):
+    PUBLIC_CHOICES = ((True, 'опубликована'), (False, 'снять с публикации'))
+
     product_name = models.CharField(max_length=50, verbose_name='название продукта')
     product_description = models.TextField(verbose_name='описание продукта')
     product_preview = models.ImageField(upload_to='product/', verbose_name='превью', **NULLABLE)
@@ -15,7 +17,10 @@ class Product(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     last_modified_date = models.DateTimeField(auto_now=True, verbose_name='дата последнего изменения')
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='пользователь')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                             verbose_name='пользователь')
+
+    publication = models.BooleanField(choices=PUBLIC_CHOICES, default=False, verbose_name='признак публикации')
 
     def __str__(self):
         return f'{self.product_name}'
