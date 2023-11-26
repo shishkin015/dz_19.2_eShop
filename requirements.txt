@@ -3,3 +3,4 @@ django
 pillow
 ipython
 pytils
+redisgit
