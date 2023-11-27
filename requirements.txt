@@ -3,4 +3,5 @@ django
 pillow
 ipython
 pytils
-redisgit
+redis
+python-dotenv

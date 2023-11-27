@@ -1,14 +1,15 @@
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.forms import formset_factory, inlineformset_factory
+
+from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Category, Version
+from catalog.services import cached_categories_for_catalog
 
 
 # Create your views here.
@@ -22,7 +23,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['object_list'] = Category.objects.all()
+        context_data['object_list'] = cached_categories_for_catalog(Category.objects)
         return context_data
 
 
